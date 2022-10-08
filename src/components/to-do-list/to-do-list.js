@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styles from './to-do-list.module.scss';
-import { useSelector, useDispatch } from 'react-redux'
-import { add, edit, remove } from '../../slices/to-do-slice'
+import { useSelector, useDispatch } from 'react-redux';
+import { add, edit, remove } from '../../slices/to-do-slice';
 
 const ToDoList = () => {
   const items = useSelector((state) => state.toDo.items)

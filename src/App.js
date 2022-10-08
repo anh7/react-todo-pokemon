@@ -1,11 +1,15 @@
 import './App.css';
-import ToDoList from './components/to-do-list/to-do-list.lazy';
+import '@fontsource/roboto/300.css';
+import '@fontsource/roboto/400.css';
+import '@fontsource/roboto/500.css';
+import '@fontsource/roboto/700.css';
+import Dashboard from './components/dashboard/dashboard';
 
 function App() {
   return (
     <div className="App">
       <h3>To-Do Pokemon</h3>
-      <ToDoList />
+      <Dashboard />
     </div>
   );
 }
