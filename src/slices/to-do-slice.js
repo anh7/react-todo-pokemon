@@ -8,8 +8,7 @@ export const ToDoSlice = createSlice({
   reducers: {
     add: (state, action) => {
       // Should handle error if there is error with connection
-      state.items = state.items.push(action.payload)
-      console.log(state.items)
+      state.items = [...state.items, action.payload]
     },
     edit: (state, action) => {
       state.items[state.items.findIndex(el => el.id === action.payload.id)] = action.payload;
