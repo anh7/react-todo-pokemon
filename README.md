@@ -34,4 +34,4 @@ See the section about [deployment](https://facebook.github.io/create-react-app/d
 // Describe structure of the project
 
 ## License
-This one has no license. Feel free to use it as your own. Happy a nice day.
+[MIT](https://choosealicense.com/licenses/mit/)
