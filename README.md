@@ -16,8 +16,7 @@ You may also see any lint errors in the console.
 
 ### `npm test`
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+This is not ready yet.
 
 ### `npm run build`
 
@@ -31,7 +30,7 @@ See the section about [deployment](https://facebook.github.io/create-react-app/d
 
 ## Structure
 
-// Describe structure of the project
+This is not ready yet.
 
 ## License
 [MIT](https://choosealicense.com/licenses/mit/)
