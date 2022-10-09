@@ -13,24 +13,6 @@ import Paper from '@mui/material/Paper';
 import { Button, ButtonGroup, Checkbox } from '@mui/material';
 import { AddCircle, Delete, Edit } from '@mui/icons-material';
 
-function createData(id, name, image) {
-  return { id, name, image};
-}
-
-const rows = [
-  createData(13, 'Weedle', 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/13.png'),
-  createData(14, 'Pokemon 14', 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/14.png'),
-  createData(15, 'Pokemon 15', 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/15.png'),
-  createData(16, 'Pokemon 16', 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/16.png'),
-  createData(17, 'Pokemon 17', 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/17.png'),
-  createData(18, 'Pokemon 18', 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/18.png'),
-];
-
-const options = {
-  customHeadRender:() => null
-};
-
-
 const ToDoList = () => {
   const items = useSelector((state) => state.toDo.items)
   const dispatch = useDispatch()
@@ -49,7 +31,7 @@ const ToDoList = () => {
           </TableRow>
         </TableHead>
         <TableBody>
-          {rows.map((row) => (
+          {items.map((row) => (
             <TableRow
               key={row.id}
               sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
