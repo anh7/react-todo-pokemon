@@ -42,6 +42,14 @@ export const ToDoSlice = createSlice({
       // Should handle error if there is no item existing
       state.items = state.items.filter(item => item.id !== action.payload)
     },
+    changeName: (state, action) => {
+      state.items = state.items.map((item) => {
+        if (item.id === action.payload.id) {
+          return {...item, name: action.payload.newName}
+        }
+        return item;
+      });
+    },
     startEditing: (state, action) => {
       state.items = state.items.map((item) => {
         if (item.id === action.payload) {
@@ -88,6 +96,6 @@ export const ToDoSlice = createSlice({
   }
 })
 
-export const { add , edit, toggleComplete, remove, startEditing, endEditing } = ToDoSlice.actions
+export const { add , edit, toggleComplete, remove, startEditing, endEditing, changeName } = ToDoSlice.actions
 
 export default ToDoSlice.reducer

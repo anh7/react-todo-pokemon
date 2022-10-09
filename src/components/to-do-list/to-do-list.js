@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import styles from './to-do-list.module.scss';
 import { useSelector, useDispatch } from 'react-redux';
-import { addThunk, edit, toggleComplete, remove, startEditing } from '../../slices/to-do-slice';
+import { addThunk, edit, toggleComplete, remove, startEditing, endEditing, changeName } from '../../slices/to-do-slice';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
@@ -11,7 +11,7 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import { Button, ButtonGroup, Checkbox, Skeleton, TextField } from '@mui/material';
-import { AddCircle, Delete, Edit, ImageNotSupported } from '@mui/icons-material';
+import { AddCircle, Check, Delete, Edit, ImageNotSupported } from '@mui/icons-material';
 
 const ToDoList = () => {
   const allItems = useSelector((state) => state.toDo.items);
@@ -66,16 +66,30 @@ const ToDoList = () => {
               <TableCell>
                 {
                   row.isEditing &&
-                  <TextField id={`text-field-id-${row.id}`} label="Name" variant="outlined" />
+                  <TextField
+                    id={`text-field-id-${row.id}`} 
+                    label="Name" 
+                    variant="outlined"
+                    value={row.name}
+                    onChange={(e) => dispatch(changeName({
+                      id: row.id,
+                      newName: e.target.value
+                    }))}
+                    InputProps={{endAdornment: 
+                      <Button onClick={() => dispatch(endEditing(row.id))}>
+                        <Check />
+                      </Button>
+                    }}
+                    />
                 }
-                {row.name}
+                {!row.isEditing && row.name}
               </TableCell>
               <TableCell align="right">
                 <ButtonGroup>
-                  <Button>
-                    <Edit 
-                      disabled={row.isEditing}
-                      onClick={() => dispatch(startEditing(row.id))}/>
+                  <Button 
+                    disabled={row.isEditing}
+                    onClick={() => dispatch(startEditing(row.id))}>
+                    <Edit/>
                   </Button>
                   <Button onClick={() => dispatch(remove(row.id))}>
                     <Delete/>
