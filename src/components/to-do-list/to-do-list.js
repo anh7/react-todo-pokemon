@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import PropTypes from 'prop-types';
-import styles from './to-do-list.module.scss';
 import { useSelector, useDispatch } from 'react-redux';
-import { addThunk, edit, toggleComplete, remove, startEditing, endEditing, changeName, startAdding } from '../../slices/to-do-slice';
+import { addThunk, toggleComplete, remove, startEditing, endEditing, changeName, startAdding } from '../../slices/to-do-slice';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
