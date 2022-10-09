@@ -1,8 +1,8 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import styles from './to-do-list.module.scss';
 import { useSelector, useDispatch } from 'react-redux';
-import { add, edit, remove } from '../../slices/to-do-slice';
+import { addThunk, edit, toggleComplete, remove, startEditing } from '../../slices/to-do-slice';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
@@ -10,12 +10,18 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
-import { Button, ButtonGroup, Checkbox } from '@mui/material';
-import { AddCircle, Delete, Edit } from '@mui/icons-material';
+import { Button, ButtonGroup, Checkbox, Skeleton, TextField } from '@mui/material';
+import { AddCircle, Delete, Edit, ImageNotSupported } from '@mui/icons-material';
 
 const ToDoList = () => {
-  const items = useSelector((state) => state.toDo.items)
-  const dispatch = useDispatch()
+  const allItems = useSelector((state) => state.toDo.items);
+  const isAdding = useSelector((state) => state.toDo.isAdding);
+  const dispatch = useDispatch();
+  const [items, setItems] = useState(allItems);
+
+  useEffect(() => {
+    setItems(allItems);
+  }, [allItems])
 
   return (
     <TableContainer component={Paper}>
@@ -24,31 +30,54 @@ const ToDoList = () => {
           <TableRow>
             <TableCell colSpan={4} align="center">
               <Button sx={{width:'100%'}}
-                onClick={() => dispatch(add())}>
+                disabled={isAdding}
+                onClick={() => dispatch(addThunk())}>
                 <AddCircle sx={{mr:2}}/> Add A Pokemon
               </Button>
             </TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
+          { isAdding &&
+            <TableRow>
+              <TableCell colSpan={4}>
+                <Skeleton variant="rounded" width={'100%'} height={60} ></Skeleton>
+              </TableCell>
+            </TableRow>
+          }
           {items.map((row) => (
             <TableRow
               key={row.id}
               sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
             >
               <TableCell component="th" scope="row">
-                <Checkbox size='large'/>
+                <Checkbox size='large' onClick={() => toggleComplete(row.id)}/>
+              </TableCell>
+              <TableCell align='center'>
+                { 
+                  !row.image &&
+                  <ImageNotSupported/>
+                }
+                {
+                  row.image &&
+                  <img src={row.image} alt={`Front of ${row.name}`}/> 
+                }
               </TableCell>
               <TableCell>
-                <img src={row.image} /> 
+                {
+                  row.isEditing &&
+                  <TextField id={`text-field-id-${row.id}`} label="Name" variant="outlined" />
+                }
+                {row.name}
               </TableCell>
-              <TableCell>{row.name}</TableCell>
               <TableCell align="right">
                 <ButtonGroup>
                   <Button>
-                    <Edit/>
+                    <Edit 
+                      disabled={row.isEditing}
+                      onClick={() => dispatch(startEditing(row.id))}/>
                   </Button>
-                  <Button>
+                  <Button onClick={() => dispatch(remove(row.id))}>
                     <Delete/>
                   </Button>
                 </ButtonGroup>
