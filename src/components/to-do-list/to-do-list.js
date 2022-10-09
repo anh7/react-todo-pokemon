@@ -10,7 +10,7 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
-import { Button, ButtonGroup, Checkbox, Skeleton, TextField } from '@mui/material';
+import { Button, ButtonGroup, Checkbox, Skeleton, TextField, Typography } from '@mui/material';
 import { AddCircle, Check, Delete, Edit, ImageNotSupported } from '@mui/icons-material';
 
 const ToDoList = () => {
@@ -38,6 +38,16 @@ const ToDoList = () => {
           </TableRow>
         </TableHead>
         <TableBody>
+          {
+            (!items || items.length === 0) &&
+            <TableRow>
+              <TableCell colSpan={4} align={'center'}>
+                <Typography variant="subtitle1" gutterBottom>
+                  No data yet. Click the button above to add a new row.
+                </Typography>
+              </TableCell>
+            </TableRow>
+          }
           { isAdding &&
             <TableRow>
               <TableCell colSpan={4}>
