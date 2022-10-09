@@ -24,12 +24,17 @@ export const ToDoSlice = createSlice({
   initialState: {
     items: [],
     count: null,
-    isAdding: false,
+    controlStatus: {
+      isAdding: false
+    },
     status: ToDoListStatus.Loading
   },
   reducers: {
-    add: (state, action) => {
-      state.items = [action.payload, ...state.items]
+    startAdding: (state) => {
+      state.controlStatus = {...state.controlStatus, isAdding: true}
+    },
+    endAdding: (state) => {
+      state.controlStatus = {...state.controlStatus, isAdding: false}
     },
     edit: (state, action) => {
       state.items[state.items.findIndex(el => el.id === action.payload.id)] = action.payload;
@@ -74,7 +79,6 @@ export const ToDoSlice = createSlice({
       })
       .addCase(initThunk.fulfilled, (state, action) => {
         state.status = ToDoListStatus.Initialized;
-        // Add any fetched posts to the array
         state.count = action.payload;
       })
       .addCase(initThunk.rejected, (state) => {
@@ -84,18 +88,16 @@ export const ToDoSlice = createSlice({
         state.isAdding = false;
       })
       .addCase(addThunk.fulfilled, (state, action) => {
-        // state.status = ToDoListStatus.Initialized;
         // Add any fetched posts to the array
-        state.isAdding = false;
+        state.controlStatus = {...state.controlStatus, isAdding: false}
         state.items = [action.payload, ...state.items];
       })
       .addCase(addThunk.rejected, (state) => {
-        state.isAdding = false;
-        // state.status = ToDoListStatus.HasErrors;
+        state.controlStatus = {...state.controlStatus, isAdding: false}
       })
   }
 })
 
-export const { add , edit, toggleComplete, remove, startEditing, endEditing, changeName } = ToDoSlice.actions
+export const { startAdding, endAdding , edit, toggleComplete, remove, startEditing, endEditing, changeName } = ToDoSlice.actions
 
 export default ToDoSlice.reducer

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import styles from './to-do-list.module.scss';
 import { useSelector, useDispatch } from 'react-redux';
-import { addThunk, edit, toggleComplete, remove, startEditing, endEditing, changeName } from '../../slices/to-do-slice';
+import { addThunk, edit, toggleComplete, remove, startEditing, endEditing, changeName, startAdding } from '../../slices/to-do-slice';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
@@ -14,14 +14,23 @@ import { Button, ButtonGroup, Checkbox, Skeleton, TextField, Typography } from '
 import { AddCircle, Check, Delete, Edit, ImageNotSupported } from '@mui/icons-material';
 
 const ToDoList = () => {
-  const allItems = useSelector((state) => state.toDo.items);
-  const isAdding = useSelector((state) => state.toDo.isAdding);
+  const stateItems = useSelector((state) => state.toDo.items);
+  const stateIsAdding = useSelector((state) => state.toDo.controlStatus.isAdding);
   const dispatch = useDispatch();
-  const [items, setItems] = useState(allItems);
+  const [items, setItems] = useState(stateItems);
+  const [isAdding, setIsAdding] = useState(stateIsAdding);
+
+  const addItem = () => {
+    dispatch(startAdding());
+    dispatch(addThunk());
+  }
 
   useEffect(() => {
-    setItems(allItems);
-  }, [allItems])
+    setItems(stateItems);
+  }, [stateItems]);
+  useEffect(() => {
+    setIsAdding(stateIsAdding);
+  }, [stateIsAdding])
 
   return (
     <TableContainer component={Paper}>
@@ -31,7 +40,7 @@ const ToDoList = () => {
             <TableCell colSpan={4} align="center">
               <Button sx={{width:'100%'}}
                 disabled={isAdding}
-                onClick={() => dispatch(addThunk())}>
+                onClick={() => addItem()}>
                 <AddCircle sx={{mr:2}}/> Add A Pokemon
               </Button>
             </TableCell>
@@ -39,7 +48,7 @@ const ToDoList = () => {
         </TableHead>
         <TableBody>
           {
-            (!items || items.length === 0) &&
+            (!items || items.length === 0) && !isAdding &&
             <TableRow>
               <TableCell colSpan={4} align={'center'}>
                 <Typography variant="subtitle1" gutterBottom>
