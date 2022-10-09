@@ -8,7 +8,6 @@ import Dashboard from './components/dashboard/dashboard';
 function App() {
   return (
     <div className="App">
-      <h3>To-Do Pokemon</h3>
       <Dashboard />
     </div>
   );

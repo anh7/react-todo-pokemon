@@ -1,0 +1,7 @@
+@media(max-width: 395px) {
+  .MuiContainer-root
+    .MuiGrid-container 
+        .MuiGrid-item {
+            padding-left: 8px;
+        }
+}

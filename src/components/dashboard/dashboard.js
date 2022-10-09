@@ -26,11 +26,7 @@ const Dashboard = () => {
       <Box sx={{ display: 'flex' }}>
         <CssBaseline />
         <MuiAppBar position="absolute">
-          <Toolbar
-            sx={{
-              pr: '24px', // keep right padding when drawer closed
-            }}
-          >
+          <Toolbar>
             <Typography
               component="h1"
               variant="h6"
@@ -39,7 +35,7 @@ const Dashboard = () => {
               textAlign="center"
               sx={{ flexGrow: 1 }}
             >
-              React To-Do Pokemon
+              Let's Catch A Pokemon
             </Typography>
           </Toolbar>
         </MuiAppBar>
@@ -52,13 +48,13 @@ const Dashboard = () => {
             overflow: 'auto',
           }}
         >
-          <Toolbar />
-          <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
-            <Grid container spacing={3}>
-              <Grid item xs={12}>
-                <Paper sx={{ p: 2, display: 'flex', flexDirection: 'column' }}>
-                  <ToDoList />
-                </Paper>
+          <Container maxWidth="md" sx={{ mt: 12, mb: 4 }}>
+            <Grid container spacing={2} 
+              direction="column"
+              alignItems="center"
+              justifyContent="center">
+              <Grid item xs={8}>
+                <ToDoList />
               </Grid>
             </Grid>
           </Container>
