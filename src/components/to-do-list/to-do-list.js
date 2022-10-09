@@ -10,7 +10,8 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
-import { Button, Checkbox } from '@mui/material';
+import { Button, ButtonGroup, Checkbox } from '@mui/material';
+import { AddCircle, Delete, Edit } from '@mui/icons-material';
 
 function createData(id, name, image) {
   return { id, name, image};
@@ -35,15 +36,14 @@ const ToDoList = () => {
   const dispatch = useDispatch()
 
   return (
-    // Should add MUI for styling 
-    //<button onClick={() => dispatch(add({id: 1, name: 'Test'}))}>Add</button>
     <TableContainer component={Paper}>
       <Table stickyHeader aria-label="sticky table">
         <TableHead>
           <TableRow>
             <TableCell colSpan={4} align="center">
-              <Button>
-                Add A Pokemon
+              <Button sx={{width:'100%'}}
+                onClick={() => dispatch(add())}>
+                <AddCircle sx={{mr:2}}/> Add A Pokemon
               </Button>
             </TableCell>
           </TableRow>
@@ -55,13 +55,22 @@ const ToDoList = () => {
               sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
             >
               <TableCell component="th" scope="row">
-                <Checkbox />
+                <Checkbox size='large'/>
               </TableCell>
               <TableCell>
                 <img src={row.image} /> 
               </TableCell>
               <TableCell>{row.name}</TableCell>
-              <TableCell align="right">Buttons</TableCell>
+              <TableCell align="right">
+                <ButtonGroup>
+                  <Button>
+                    <Edit/>
+                  </Button>
+                  <Button>
+                    <Delete/>
+                  </Button>
+                </ButtonGroup>
+              </TableCell>
             </TableRow>
           ))}
         </TableBody>
